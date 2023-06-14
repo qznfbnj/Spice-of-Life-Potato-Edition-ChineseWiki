@@ -68,16 +68,14 @@
 	shouldForbiddenCount = true
 	#
 	# 食用食物时的默认多样性分数。几乎没有理由修改这项配置。
-	The default diversity value when you eat a food. There is little reason to ever change this.
 	#
 	#
 	#取值范围：0.0 ~ 100.0
 	defaultContribution = 1.0
 	#
 	# 食物多样性分数的时间惩罚应该在队列中第几次进食后不再继续。
-	# **Needs to be less than queueSize and greater than startDecay!!!**
-	# Note that if you update queueSize, to retain the default behavior, you need to also
-	# set endDecay equal to the queueSize
+	# **需要小于 queueSize 且大于 startDecay！！！**
+	# 注意：更新 queueSize后，要保留默认行为，还需要将 endDecay 设置为等于 queueSize
 	#
 	#
 	#取值范围：0 ~ 1000
