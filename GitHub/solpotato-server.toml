@@ -1,109 +1,102 @@
 
 [Benefits]
-	# A list of diversity value thresholds, in ascending order. When the player's food diversity reaches a threshold,
-	# they will get the benefits associated with that threshold.
+	# 多样性分数阈值列表，升序排列。当玩家的食物多样性分数达到一个阈值时，他们将获得该阈值所关联的收益。
 	#
 	#
 	thresholds = [3.0, 5.0, 7.0, 10.0, 13.0, 18.0, 25.0, 31.0]
 	# 
-	# Define custom benefits here. Each entry in the list corresponds to a benefit that will be obtained
-	# at the corresponding diversity threshold defined the list above. For example, the first entry in
-	# this list will be applied when the player's food diversity reaches the number in the first entry in
-	# the threshold list above.
-	# Each benefit is a string with the following form: [type],[registry name],[value] (without the brackets)
-	# The type can either be 'attribute' for attribute modifiers or 'effect' for potion effects
-	# Registry names for common vanila attributes are 
-	# generic.max_health, generic.knockback_resistance, generic.movement_speed, generic.luck, 
-	# generic.attack_damage, generic.attack_speed, generic.armor, generic.armor_toughness 
-	# The value of attributes is the numerical number that will be added to that attribute
-	# Use a negative number for subtraction. Multiplicative modifiers are not supported.
-	# For potion effects, the value is an integer and is the potion effect amplifier. Note
-	# that the amplifier is 0 indexed, so minecraft:strength,1 corresponds to Strength II
+	# 在这里定义自定义增益。列表中的每个条目都对应上面列表定义的相应多样性阈值下将获得的收益。
+	# 举个例子，当玩家的食物多样性分数达到上面阈值列表中第一个数字时，将应用此列表中的第一个条目。
+	# 每个增益都是一个字符串，具有以下形式：[type],[registry name],[value]（不带括号）
+	# type 可以是 'attribute'（属性修饰符）或 'effect'（状态效果）
+	# 常见原版属性的注册名：
+	# generic.max_health, generic.knockback_resistance, generic.movement_speed, generic.luck,（最大生命值/击退抗性/移动速度/幸运）
+	# generic.attack_damage, generic.attack_speed, generic.armor, generic.armor_toughness （攻击伤害/攻击速度/护甲值/盔甲韧性）
+	# 属性的值是该属性将加上的数字。使用负数代表减法。不支持乘法。
+	# 对于状态效果，该值为整数，代表状态效果倍率。
+	# 注意：倍率从 0 开始，因此 minecraft:strength,1 对应力量II
 	#
-	# To add multiple benefits to the same threshold, separate them by a semicolon ';'
-	# Make sure that you have NO SPACES!
-	# As an example, 'attribute,generic.max_health,2;effect,strength,1' will give both +2 max hp
-	# and Strength II at the corresponding threshold.
+	# 要向一个阈值添加多个增益，请用分号“;”分隔它们
+	# 确保你没有加空格！
+	# 举个例子，'attribute,generic.max_health,2;effect,strength,1' 将为相应阈值同时提供 最大生命值+2 和 力量II 的增益
 	#
 	#
 	benefitsUnparsed = ["attribute,generic.max_health,2", "attribute,generic.max_health,2;effect,strength,0", "attribute,generic.max_health,2;effect,regeneration,0", "attribute,generic.max_health,2;effect,speed,0", "attribute,generic.max_health,2;attribute,generic.armor_toughness,2", "attribute,generic.armor_toughness,2;effect,strength,1", "attribute,generic.max_health,4", "attribute,generic.max_health,6"]
 
 [Filtering]
-	# Foods in this list won't contribute to food diversity.
+	# 此列表中的食物不会贡献食物多样性分数。
 	#
 	#
 	blacklist = []
 	#
-	# When this list contains anything, the blacklist is ignored and instead only foods from here count.
+	# 此列表包含任何内容时，黑名单将被忽略，只有来自此处的食物才参与计算食物多样性分数。
 	#
 	#
 	whitelist = []
 
 [Miscellaneous]
 	#
-	# How many foods should be tracked. I.e., how many food items eaten in the past should count toward food diversity.
-	# Note that the larger this is, the higher your potential diversity value can be, so keep this mind
-	# if you are defining custom thresholds/benefits above.
-	# !!!If you update queueSize, and leave the other advanced options unchanged,
-	# make sure you change endDecay (below) to match queueSize, or else nothing will change!!!
+	# 应该追踪多少食物。换句话说，应将过去吃过的多少食物计入食物多样性。 
+	# 注意：这个值越大，你的多样性分数上限就越高，如果你有在上面定义自定义阈值/收益，请记住这一点。
+	# ！！！如果你改变了 queueSize，并保持其他高级选项不变，请确保改变了 endDecay（在下面）以匹配 queueSize，否则什么都不会改变！！！
 	#
 	#
-	#Range: 1 ~ 1000
+	#取值范围：1 ~ 1000
 	queueSize = 32
 	#
-	# If true, eating foods outside of survival mode (e.g. creative/adventure) is not tracked.
+	# 若为真，则不会追踪不在生存模式（例如创造/冒险）中食用的食物。
 	#
 	#
 	limitProgressionToSurvival = false
-	# Whether or not to reset food diversity on death, effectively losing all benefits.
+	# 死亡时是否重置食物多样性，这会有效地失去所有增益。
 	#
 	#
 	resetOnDeath = false
 
 [Advanced]
 	#
-	# How many meals in the past should the diversity time penalty start to apply.
-	# **Needs to be less than queueSize and less than or equal to endDecay!!!**
+	# 食物多样性分数的时间惩罚应该在队列中第几次进食后开始生效。
+	# **需要小于 queueSize 且小于或等于 endDecay！！！**
 	#
 	#
-	#Range: 0 ~ 1000
+	#取值范围：0 ~ 1000
 	startDecay = 0
 	#
-	# Whether blacklisted foods should still take a spot in the queue, even if they don't contribute any diversity.
+	# 列入黑名单的食物是否仍能加入队列中，即使它们不会贡献一星半点的多样性分数。
 	#
 	#
 	shouldForbiddenCount = true
 	#
-	# The default diversity value when you eat a food. There is little reason to ever change this.
+	# 食用食物时的默认多样性分数。几乎没有理由修改这项配置。
+	The default diversity value when you eat a food. There is little reason to ever change this.
 	#
 	#
-	#Range: 0.0 ~ 100.0
+	#取值范围：0.0 ~ 100.0
 	defaultContribution = 1.0
 	#
-	# How many meals in the past should the diversity penalty stop from.
+	# 食物多样性分数的时间惩罚应该在队列中第几次进食后不再继续。
 	# **Needs to be less than queueSize and greater than startDecay!!!**
 	# Note that if you update queueSize, to retain the default behavior, you need to also
 	# set endDecay equal to the queueSize
 	#
 	#
-	#Range: 0 ~ 1000
+	#取值范围：0 ~ 1000
 	endDecay = 32
-	# These config options all affect the technical details of how diversity is calculated.
-	# Please look at the explanation on the wiki on the github to see how these values work.
+	# 这些配置选项都会影响如何计算多样性的技术细节。
+	# 请查看 github 中的 wiki 上的解释，了解这些值是如何运作的。
 	#
-	# Lowest possible diversity contribution a food can give. This is a multiplier, not an
-	# absolute value!
+	# 食物可以提供的最低多样性分数。这是乘数，不是绝对值！
 	#
 	#
-	#Range: 0.0 ~ 1.0
+	#取值范围：0.0 ~ 1.0
 	minContribution = 0.0
 
 [Complexity]
-	# Define custom complexity values for individual foods here.
-	# The complexity value of a food is how much diversity points it gives. 
-	# The base diversity value of foods not defined here is equal to defaultContribution.
-	# Each entry in the list should be a string defining one food, and the format is [registry name],[value]
-	# Note that tags are NOT currently supported.
+	# 在这里为单个食物定义自定义的复杂度的值。
+	# 食物的复杂性的值代表它能提供多少多样性分数。
+	# 此处未定义的食物的基本多样性分数等于 defaultContribution。
+	# 列表中的每个条目都应该是一个字符串，定义一种食物，格式为 [registry name],[value]
+	# 注意：目前不支持标签。
 	#
 	#
 	complexityUnparsed = ["minecraft:golden_carrot,2", "minecraft:golden_carrot,2", "minecraft:enchanted_golden_apple,5"]
